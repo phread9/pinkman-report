@@ -1,0 +1,301 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Pinkman Report — {{ subject.title }}, {{ subject.city }}</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<!-- ============ COVER ============ -->
+<section class="cover no-break-before">
+  <div>
+    <div class="cover-top">
+      <div class="brand-line">PINKMAN · REPORT</div>
+      <div class="element-tile" aria-hidden="true">
+        <span class="number">PR</span>
+        <div class="symbol">Pi</div>
+        <div class="name">Pinkman</div>
+      </div>
+    </div>
+
+    <div class="title-block">
+      <div class="eyebrow">Property valuation</div>
+      <h1 class="subject-anchor">{{ subject.title }}</h1>
+      <div class="subtitle">{{ subject.postcode }} {{ subject.city }}{% if subject.neighbourhood %} · {{ subject.neighbourhood }}{% endif %}</div>
+    </div>
+
+    <div class="price-row">
+      <div>
+        <div class="label">List price</div>
+        <div class="value">€ {{ "{:,.0f}".format(subject.price).replace(",", ".") }}</div>
+        <div class="sub">{{ subject.living_area }} m² · €{{ "{:,.0f}".format(subject.price / subject.living_area).replace(",", ".") }}/m²</div>
+      </div>
+      <div>
+        <div class="label">Year built</div>
+        <div class="value">{{ subject.construction_year or "—" }}</div>
+        <div class="sub">Energy label {{ subject.energy_label or "—" }}{% if subject.house_type %} · {{ subject.house_type }}{% endif %}</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="cover-bottom">
+    <div class="quote">
+      "Yeah, science, bitch!"
+      <span class="attrib">Jesse Pinkman</span>
+    </div>
+    <div>
+      Generated {{ generated_on }}
+    </div>
+  </div>
+</section>
+
+<!-- ============ TABLE OF CONTENTS ============ -->
+<section id="contents">
+  <div class="section-header">
+    <h2>Contents</h2>
+    <div class="lead">Click any section to jump there.</div>
+  </div>
+
+  <nav class="toc">
+    <ol>
+      <li>
+        <a href="#property-details"><span class="title">Property Details</span></a>
+        <span class="desc">Type, size, energy label, rooms, lot — everything pulled from the listing.</span>
+      </li>
+      <li>
+        <a href="#price-history"><span class="title">Price History</span></a>
+        <span class="desc">Asking prices and yearly WOZ valuations over the last {{ history_years }} years.</span>
+      </li>
+      <li>
+        <a href="#market-value"><span class="title">Estimated Market Value</span></a>
+        <span class="desc">Comp-based valuation with four condition scenarios.</span>
+      </li>
+      <li>
+        <a href="#listed-nearby"><span class="title">Recently Listed in the Area</span></a>
+        <span class="desc">Comparable nearby properties currently on the market, with a local €/m² average.</span>
+      </li>
+    </ol>
+  </nav>
+</section>
+
+<!-- ============ PROPERTY DETAILS ============ -->
+<section id="property-details">
+  <div class="section-header progress-1">
+    <h2>Property Details</h2>
+    <div class="lead">Pulled directly from the Funda listing.</div>
+  </div>
+
+  <div class="property-hero">
+    <div>
+      <div class="hero-title">{{ subject.title }}</div>
+      <div class="hero-sub">{{ subject.postcode }} {{ subject.city }}{% if subject.neighbourhood %} · {{ subject.neighbourhood }}{% endif %}</div>
+    </div>
+    <div class="hero-side">
+      <div class="label">List price</div>
+      <div class="value">€ {{ "{:,.0f}".format(subject.price).replace(",", ".") }}</div>
+    </div>
+  </div>
+
+  <div class="fact-grid">
+
+    <div class="fact">
+      <div class="icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6h-6v6H4a1 1 0 0 1-1-1z" stroke-linejoin="round" stroke-linecap="round"/></svg>
+      </div>
+      <div class="label">Property type</div>
+      <div class="value">{{ subject.object_type or "—" }}</div>
+      {% if subject.house_type %}<div class="sub">{{ subject.house_type }}</div>{% endif %}
+    </div>
+
+    <div class="fact">
+      <div class="icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 9h18M8 3v4M16 3v4" stroke-linecap="round"/></svg>
+      </div>
+      <div class="label">For sale since</div>
+      <div class="value">{{ subject.offered_since or "—" }}</div>
+    </div>
+
+    <div class="fact">
+      <div class="icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M15 9c-.5-1.5-2-2-3-2-1.5 0-3 .5-3 2 0 3 6 2 6 5 0 1.5-1.5 2-3 2-1 0-2.5-.5-3-2M12 5v2M12 17v2" stroke-linecap="round"/></svg>
+      </div>
+      <div class="label">List price</div>
+      <div class="value">€ {{ "{:,.0f}".format(subject.price).replace(",", ".") }}</div>
+      <div class="sub">€ {{ "{:,.0f}".format(subject.price / subject.living_area).replace(",", ".") }}/m²</div>
+    </div>
+
+    <div class="fact">
+      <div class="icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3" stroke-linecap="round"/></svg>
+      </div>
+      <div class="label">Year built</div>
+      <div class="value">{{ subject.construction_year or "—" }}</div>
+      {% if subject.construction_year %}<div class="sub">{{ 2026 - subject.construction_year }} years old</div>{% endif %}
+    </div>
+
+    <div class="fact">
+      <div class="icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 4 14h7l-1 8 9-12h-7z" stroke-linejoin="round" stroke-linecap="round"/></svg>
+      </div>
+      <div class="label">Energy label</div>
+      <div class="value">
+        <span class="energy-chip {{ energy_label_class }}">{{ subject.energy_label or "—" }}</span>
+      </div>
+    </div>
+
+    <div class="fact">
+      <div class="icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17V8a2 2 0 0 1 2-2h4v8h6V6h4a2 2 0 0 1 2 2v9M3 21h18M3 13h18"/></svg>
+      </div>
+      <div class="label">Bedrooms</div>
+      <div class="value">{{ subject.bedrooms or "—" }}</div>
+      {% if subject.rooms %}<div class="sub">{{ subject.rooms }} room{{ 's' if subject.rooms != 1 else '' }} total</div>{% endif %}
+    </div>
+
+    <div class="fact">
+      <div class="icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="1"/><path d="M3 9h3M3 15h3M9 3v3M15 3v3M9 18v3M15 18v3M18 9h3M18 15h3"/></svg>
+      </div>
+      <div class="label">Livable area</div>
+      <div class="value">{{ subject.living_area }} m²</div>
+    </div>
+
+    <div class="fact">
+      <div class="icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21l4-12 5 4 4-7 5 15z" stroke-linejoin="round" stroke-linecap="round"/></svg>
+      </div>
+      <div class="label">Lot area</div>
+      <div class="value">{{ subject.plot_area or "—" }}{% if subject.plot_area %} m²{% endif %}</div>
+    </div>
+
+    <div class="fact">
+      <div class="icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 4 7v10l8 5 8-5V7z" stroke-linejoin="round" stroke-linecap="round"/><path d="M12 22V12M4 7l8 5 8-5"/></svg>
+      </div>
+      <div class="label">Status</div>
+      <div class="value" style="font-size:13pt; text-transform:capitalize;">{{ subject.status or "available" }}</div>
+      {% if subject.broker_association %}<div class="sub">{{ subject.broker_association }}</div>{% endif %}
+    </div>
+
+  </div>
+</section>
+
+<!-- ============ PRICE HISTORY ============ -->
+{% if history %}
+<section id="price-history">
+  <div class="section-header progress-2">
+    <h2>Price History</h2>
+    <div class="lead">Last {{ history_years }} years.</div>
+  </div>
+
+  <div class="section-intro">
+    Review the price history for {{ subject.title }}, including past asking prices and yearly WOZ municipal valuations. These data points show how the property has been valued over time and help you sanity-check whether the current asking price is in line with historical trends.
+  </div>
+
+  <div class="price-history">
+    {% for h in history %}
+    <div class="price-row-line">
+      <span class="badge {{ 'asking' if h.status == 'asking_price' else ('sold' if h.status == 'sold' else 'woz') }}">
+        {% if h.status == 'asking_price' %}Asking{% elif h.status == 'sold' %}Sold{% else %}WOZ{% endif %}
+      </span>
+      <span class="price-date">{{ h.date }}</span>
+      <span class="price">{{ h.human_price }}</span>
+      <span class="delta {{ 'up' if h.delta_pct and h.delta_pct > 0 else ('down' if h.delta_pct and h.delta_pct < 0 else '') }}">
+        {%- if h.delta_pct is not none -%}
+          {{ "+" if h.delta_pct > 0 else "" }}{{ "%.1f"|format(h.delta_pct) }}%
+        {%- endif -%}
+      </span>
+    </div>
+    {% endfor %}
+  </div>
+</section>
+{% endif %}
+
+<!-- ============ ESTIMATED MARKET VALUE ============ -->
+<section id="market-value">
+  <div class="section-header progress-3">
+    <h2>Estimated Market Value</h2>
+    <div class="lead">{{ avm.comp_count }} comparable nearby properties.</div>
+  </div>
+
+  <div class="section-intro">
+    The market value below is computed from comparable nearby properties — both currently listed and recently sold — filtered to similar size and construction year, then weighted by inverse-distance-squared so closer comps dominate the estimate. The four condition scenarios apply linear adjustments around that center, reflecting how a well-maintained home typically transacts for more than one needing work.
+  </div>
+
+  <div class="avm-headline">
+    <div>
+      <div class="label">Central estimate</div>
+      <div class="value">€ {{ "{:,.0f}".format(avm.central_value).replace(",", ".") }}</div>
+      <div class="ppm-sub">€ {{ "{:,.0f}".format(avm.central_ppm).replace(",", ".") }} / m² × {{ subject.living_area }} m²</div>
+    </div>
+    {% set diff_pct = (subject.price - avm.central_value) / avm.central_value * 100 %}
+    <div class="compare {{ 'above' if diff_pct > 0 else 'below' if diff_pct < 0 else '' }}">
+      List price is<br>
+      <strong>{{ "%.1f"|format(diff_pct|abs) }}% {{ "above" if diff_pct > 0 else "below" if diff_pct < 0 else "at" }}</strong>
+      <br>the central estimate
+    </div>
+  </div>
+
+  <div class="scenarios">
+    {% for s in avm.scenarios %}
+    <div class="scenario {% if s.label == 'Good condition' %}central{% endif %}">
+      <div class="label">{{ s.label }}</div>
+      <div class="value">€ {{ "{:,.0f}".format(s.value).replace(",", ".") }}</div>
+      <div class="ppm">€ {{ "{:,.0f}".format(s.price_per_m2).replace(",", ".") }} / m²</div>
+    </div>
+    {% endfor %}
+  </div>
+</section>
+
+<!-- ============ RECENTLY SOLD ============ -->
+<section id="listed-nearby">
+  <div class="section-header progress-4">
+    <h2>Recently Listed in the Area</h2>
+    <div class="lead">Properties currently on the market within {{ search_radius_km }} km.</div>
+  </div>
+
+  <table class="comps">
+    <thead>
+      <tr>
+        <th>Address</th>
+        <th class="right">List price</th>
+        <th class="right">€ / m²</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for c in comps %}
+      <tr>
+        <td>
+          <div class="addr">{{ c.title }}</div>
+          <div class="meta">
+            {{ c.postcode }} {{ c.city }}{% if c.distance_km is not none %} · {{ "%.0f"|format(c.distance_km * 1000) }} m away{% endif %}<br>
+            {{ c.living_area }} m² living
+            {%- if c.living_area and subject.living_area %}
+              {%- set diff = c.living_area - subject.living_area %}
+              {%- if diff > 0 %} · {{ diff }} m² bigger{%- elif diff < 0 %} · {{ -diff }} m² smaller{%- endif %}
+            {%- endif %}
+            {%- if c.plot_area %} · {{ c.plot_area }} m² lot{% endif %}<br>
+            {{ c.construction_year or "—" }}{% if c.house_type %} · {{ c.house_type }}{% endif %}{% if c.broker_name %} · {{ c.broker_name }}{% endif %}
+          </div>
+        </td>
+        <td class="right price-cell">€ {{ "{:,.0f}".format(c.list_price).replace(",", ".") }}</td>
+        <td class="right">€ {{ "{:,.0f}".format(c.price_per_m2).replace(",", ".") }}</td>
+      </tr>
+      {% endfor %}
+      {% if comps_avg_ppm %}
+      <tr class="summary-row">
+        <td>
+          <div class="addr">Average across {{ comps|length }} listings</div>
+          <div class="meta">Local market anchor · simple mean €/m²</div>
+        </td>
+        <td class="right">—</td>
+        <td class="right price-cell">€ {{ "{:,.0f}".format(comps_avg_ppm).replace(",", ".") }}</td>
+      </tr>
+      {% endif %}
+    </tbody>
+  </table>
+</section>
+
+</body>
+</html>

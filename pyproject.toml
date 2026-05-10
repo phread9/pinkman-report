@@ -5,14 +5,14 @@ build-backend = "hatchling.build"
 [project]
 name = "pyfunda"
 version = "2.6.0"
-description = "Python API for Funda.nl real estate listings"
+description = "Free, open-source PDF property reports for Dutch homes."
 readme = "README.md"
 license = "AGPL-3.0-or-later"
 requires-python = ">=3.10"
 authors = [
-    { name = "0xMH" }
+    { name = "phread9" }
 ]
-keywords = ["funda", "real-estate", "netherlands", "housing", "api", "scraper"]
+keywords = ["funda", "real-estate", "netherlands", "housing", "property", "valuation", "report", "pdf"]
 classifiers = [
     "Development Status :: 4 - Beta",
     "Intended Audience :: Developers",
@@ -28,10 +28,16 @@ dependencies = [
     "typing_extensions>=4.0.0",
 ]
 
+[project.optional-dependencies]
+report = [
+    "jinja2>=3.1.6",
+    "weasyprint>=68.1",
+]
+
 [project.urls]
-Homepage = "https://github.com/0xMH/pyfunda"
-Repository = "https://github.com/0xMH/pyfunda"
-Issues = "https://github.com/0xMH/pyfunda/issues"
+Homepage = "https://github.com/phread9/pinkman-report"
+Repository = "https://github.com/phread9/pinkman-report"
+Issues = "https://github.com/phread9/pinkman-report/issues"
 
 [tool.hatch.build.targets.wheel]
 packages = ["funda"]

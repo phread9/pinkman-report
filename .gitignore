@@ -35,3 +35,11 @@ Thumbs.db
 # Project specific
 *.json
 uv.lock
+CLAUDE.md
+generated_reports/
+
+# pinkman-report skill
+.claude/skills/pinkman-report/__pycache__/
+
+# local
+local/

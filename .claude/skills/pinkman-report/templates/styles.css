@@ -1,0 +1,712 @@
+/* =====================================================================
+   PINKMAN REPORT — print stylesheet
+   Theme: charcoal + hazmat yellow + cream, with chemistry-tile motifs
+   ===================================================================== */
+
+@page {
+  size: A4;
+  margin: 18mm 16mm 22mm 16mm;
+  @bottom-left {
+    content: string(subject-address);
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-size: 8pt;
+    color: #888;
+  }
+  @bottom-center {
+    content: "PINKMAN REPORT";
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-size: 7pt;
+    letter-spacing: 0.18em;
+    color: #b8b8b8;
+  }
+  @bottom-right {
+    content: counter(page) " / " counter(pages);
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-size: 8pt;
+    color: #888;
+  }
+}
+
+@page :first {
+  margin: 0;
+  @bottom-left { content: none; }
+  @bottom-center { content: none; }
+  @bottom-right { content: none; }
+}
+
+* { box-sizing: border-box; }
+html, body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  color: #16161a;
+  font-size: 10pt;
+  line-height: 1.55;
+  background: #ffffff;
+}
+
+h1, h2, h3 { font-weight: 700; margin: 0; letter-spacing: -0.015em; }
+h1 { font-size: 32pt; line-height: 1.1; }
+h2 { font-size: 19pt; margin-bottom: 6pt; }
+h3 { font-size: 11pt; margin-bottom: 4pt; }
+
+a { color: inherit; text-decoration: none; }
+
+.subject-anchor { string-set: subject-address content(); }
+
+/* ---------------------------------------------------------------------
+   PERIODIC-TABLE ELEMENT TILE — used as the brand mark on the cover
+   --------------------------------------------------------------------- */
+.element-tile {
+  display: inline-block;
+  width: 24mm;
+  height: 30mm;
+  background: #f5cb1c;
+  color: #16161a;
+  border-radius: 1.5pt;
+  padding: 2mm 3mm 3mm 3mm;
+  position: relative;
+}
+.element-tile .number {
+  font-size: 8pt;
+  font-weight: 700;
+  display: block;
+  text-align: left;
+  line-height: 1;
+}
+.element-tile .symbol {
+  font-size: 24pt;
+  font-weight: 800;
+  text-align: center;
+  margin-top: 2mm;
+  letter-spacing: -0.03em;
+  line-height: 1;
+}
+.element-tile .name {
+  font-size: 6.5pt;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  text-align: center;
+  margin-top: 3mm;
+  line-height: 1;
+}
+
+/* ---------------------------------------------------------------------
+   COVER
+   --------------------------------------------------------------------- */
+.cover {
+  page-break-after: always;
+  height: 297mm;
+  width: 210mm;
+  background: #16161a;
+  color: #fbfaf6;
+  padding: 20mm 22mm;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+}
+.cover::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 4mm;
+  background: #f5cb1c;
+}
+.cover .cover-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-top: 6mm;
+}
+.cover .brand-line {
+  font-size: 10pt;
+  font-weight: 600;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: #f5cb1c;
+}
+.cover .meta-right {
+  text-align: right;
+  font-size: 9pt;
+  color: #b8b8b8;
+}
+.cover .meta-right .label {
+  color: #f5cb1c;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  font-size: 7.5pt;
+  margin-bottom: 1mm;
+}
+
+.cover .title-block { margin-top: 18mm; }
+.cover .eyebrow {
+  font-size: 9.5pt;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #f5cb1c;
+  margin-bottom: 6mm;
+}
+.cover h1 {
+  color: #fbfaf6;
+  font-size: 38pt;
+  line-height: 1.05;
+}
+.cover .subtitle {
+  font-size: 13pt;
+  color: #b8b8b8;
+  margin-top: 4mm;
+  font-weight: 400;
+}
+
+.cover .price-row {
+  margin-top: 22mm;
+  display: flex;
+  gap: 22mm;
+  border-top: 1px solid #2a2a30;
+  padding-top: 8mm;
+}
+.cover .price-row .label {
+  font-size: 8pt;
+  color: #f5cb1c;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+}
+.cover .price-row .value {
+  font-size: 24pt;
+  font-weight: 700;
+  margin-top: 3mm;
+  color: #fbfaf6;
+  letter-spacing: -0.02em;
+  white-space: nowrap;
+}
+.cover .price-row .sub {
+  font-size: 9pt;
+  color: #888;
+  margin-top: 1mm;
+}
+
+.cover-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  font-size: 8.5pt;
+  color: #888;
+}
+.cover-bottom .quote {
+  font-style: italic;
+  color: #f5cb1c;
+  font-size: 11pt;
+  letter-spacing: 0.02em;
+}
+.cover-bottom .quote .attrib {
+  display: block;
+  font-style: normal;
+  color: #888;
+  font-size: 7.5pt;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  margin-top: 1.5mm;
+}
+
+/* ---------------------------------------------------------------------
+   GENERAL SECTION FRAME
+   --------------------------------------------------------------------- */
+section {
+  page-break-inside: avoid;
+  page-break-before: always;
+  padding-top: 2mm;
+}
+section.no-break-before { page-break-before: auto; }
+
+.section-header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8mm;
+  border-bottom: 1px solid #eaeaea;
+  padding-bottom: 4mm;
+  margin-bottom: 9mm;
+  position: relative;
+}
+.section-header::after {
+  content: "";
+  position: absolute;
+  left: 0; bottom: -2px;
+  width: 0;
+  height: 2px;
+  background: #f5cb1c;
+  transition: width 0.2s;
+}
+.section-header.progress-1::after { width: 25%; }
+.section-header.progress-2::after { width: 50%; }
+.section-header.progress-3::after { width: 75%; }
+.section-header.progress-4::after { width: 100%; }
+
+.section-header h2 {
+  color: #16161a;
+  white-space: nowrap;
+  flex-shrink: 0;
+  font-size: 18pt;
+}
+.section-header .lead {
+  color: #555;
+  font-size: 9.5pt;
+  text-align: right;
+  line-height: 1.5;
+  flex: 1;
+}
+.section-intro {
+  background: transparent;
+  border-left: 3px solid #f5cb1c;
+  padding: 1mm 0 1mm 6mm;
+  margin-bottom: 8mm;
+  color: #444;
+  font-size: 10pt;
+  line-height: 1.65;
+}
+
+/* ---------------------------------------------------------------------
+   TABLE OF CONTENTS
+   --------------------------------------------------------------------- */
+.toc { margin-top: 6mm; }
+.toc ol {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  counter-reset: toc-counter;
+}
+.toc li {
+  counter-increment: toc-counter;
+  display: block;
+  border-bottom: 1px solid #f0f0f0;
+  padding: 5mm 0 4.5mm 0;
+}
+.toc li a {
+  display: flex;
+  align-items: baseline;
+  color: #16161a;
+  font-weight: 600;
+  font-size: 12pt;
+}
+.toc li a::before {
+  content: counter(toc-counter, decimal-leading-zero);
+  color: #f5cb1c;
+  font-weight: 700;
+  font-size: 11pt;
+  width: 14mm;
+  letter-spacing: 0.04em;
+  flex-shrink: 0;
+}
+.toc li a .title { flex: 1; }
+.toc li a::after {
+  content: target-counter(attr(href), page);
+  font-weight: 400;
+  color: #555;
+  font-size: 11pt;
+  margin-left: 4mm;
+}
+.toc li .desc {
+  display: block;
+  font-size: 9pt;
+  font-weight: 400;
+  color: #777;
+  margin-top: 1mm;
+  padding-left: 14mm;
+}
+
+/* ---------------------------------------------------------------------
+   PROPERTY DETAILS — full-page icon grid
+   --------------------------------------------------------------------- */
+.property-hero {
+  background: #16161a;
+  color: #fbfaf6;
+  border-radius: 3pt;
+  padding: 7mm 8mm;
+  margin-bottom: 8mm;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.property-hero .hero-title {
+  font-size: 14pt;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+.property-hero .hero-sub {
+  color: #b8b8b8;
+  font-size: 9.5pt;
+  margin-top: 1mm;
+}
+.property-hero .hero-side {
+  text-align: right;
+}
+.property-hero .hero-side .label {
+  font-size: 7.5pt;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  color: #f5cb1c;
+}
+.property-hero .hero-side .value {
+  font-size: 22pt;
+  font-weight: 700;
+  margin-top: 1mm;
+}
+
+.fact-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 5mm;
+  margin-bottom: 6mm;
+}
+.fact {
+  background: #fff;
+  border: 1px solid #ececec;
+  border-radius: 4pt;
+  padding: 6mm 6mm;
+  display: flex;
+  flex-direction: column;
+  gap: 2mm;
+  min-height: 32mm;
+}
+.fact .icon {
+  width: 8mm;
+  height: 8mm;
+  color: #f5cb1c;
+}
+.fact .icon svg {
+  width: 100%;
+  height: 100%;
+}
+.fact .label {
+  font-size: 8pt;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: #888;
+  font-weight: 600;
+}
+.fact .value {
+  font-size: 16pt;
+  font-weight: 700;
+  color: #16161a;
+  line-height: 1.1;
+}
+.fact .sub {
+  font-size: 8.5pt;
+  color: #777;
+}
+
+/* Energy-label chip — color scale */
+.energy-chip {
+  display: inline-block;
+  padding: 1mm 4mm;
+  border-radius: 2.5pt;
+  font-weight: 700;
+  font-size: 16pt;
+  letter-spacing: 0.02em;
+  color: #fff;
+  line-height: 1.2;
+}
+.energy-chip.a-plus-4, .energy-chip.a-plus-3 { background: #15803d; }
+.energy-chip.a-plus-2 { background: #16a34a; }
+.energy-chip.a-plus-1 { background: #22c55e; }
+.energy-chip.a { background: #65a30d; }
+.energy-chip.b { background: #a3a30b; }
+.energy-chip.c { background: #ca9a04; color: #16161a; }
+.energy-chip.d { background: #ea850c; }
+.energy-chip.e { background: #dc6520; }
+.energy-chip.f { background: #c93636; }
+.energy-chip.g { background: #991b1b; }
+.energy-chip.unknown { background: #888; }
+
+/* Features row */
+.features-title {
+  margin-top: 6mm;
+  margin-bottom: 4mm;
+  font-size: 8pt;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  color: #888;
+  font-weight: 700;
+  border-top: 1px solid #ebe6d4;
+  padding-top: 5mm;
+}
+.features-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 3mm 4mm;
+}
+.feature-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 2.5mm;
+  background: #fff;
+  border: 1px solid #ebe6d4;
+  padding: 2.5mm 4mm;
+  border-radius: 20pt;
+  font-size: 9.5pt;
+  font-weight: 600;
+  color: #16161a;
+}
+.feature-dot {
+  display: inline-block;
+  width: 2.2mm;
+  height: 2.2mm;
+  background: #f5cb1c;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+/* ---------------------------------------------------------------------
+   PRICE HISTORY
+   --------------------------------------------------------------------- */
+.price-history { margin-top: 4mm; }
+.price-row-line {
+  display: flex;
+  align-items: center;
+  gap: 6mm;
+  padding: 4mm 0;
+  border-bottom: 1px solid #eee;
+}
+.price-row-line:last-child { border-bottom: none; }
+.price-row-line .badge {
+  flex: 0 0 24mm;
+  font-size: 7.5pt;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-weight: 700;
+  padding: 1.5mm 0;
+  border-radius: 2pt;
+  text-align: center;
+}
+.price-row-line .badge.asking { background: #16161a; color: #f5cb1c; }
+.price-row-line .badge.woz { background: #f5f1e3; color: #75551a; }
+.price-row-line .badge.sold { background: #15803d; color: #fff; }
+.price-row-line .price-date {
+  flex: 1;
+  font-size: 10pt;
+  color: #444;
+  white-space: nowrap;
+}
+.price-row-line .price {
+  flex: 0 0 32mm;
+  font-size: 13pt;
+  font-weight: 700;
+  color: #16161a;
+  text-align: right;
+  white-space: nowrap;
+}
+.price-row-line .delta {
+  flex: 0 0 18mm;
+  font-size: 9.5pt;
+  color: #777;
+  text-align: left;
+  white-space: nowrap;
+}
+.price-row-line .delta.up { color: #15803d; }
+.price-row-line .delta.down { color: #b91c1c; }
+
+/* ---------------------------------------------------------------------
+   AVM / ESTIMATED MARKET VALUE
+   --------------------------------------------------------------------- */
+.avm-headline {
+  background: #16161a;
+  color: #fbfaf6;
+  border-radius: 3pt;
+  padding: 7mm 8mm 7mm 10mm;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+}
+.avm-headline::before {
+  content: "";
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: 4mm;
+  background: #f5cb1c;
+}
+.avm-headline .label {
+  font-size: 8pt;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  color: #f5cb1c;
+}
+.avm-headline .value {
+  font-size: 26pt;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  margin-top: 2mm;
+  white-space: nowrap;
+}
+.avm-headline .ppm-sub {
+  font-size: 9.5pt;
+  color: #b8b8b8;
+  margin-top: 1mm;
+}
+.avm-headline .compare {
+  font-size: 10pt;
+  color: #b8b8b8;
+  text-align: right;
+  max-width: 60mm;
+  line-height: 1.5;
+}
+.avm-headline .compare strong { color: #fbfaf6; }
+.avm-headline .compare.above strong { color: #fca5a5; }
+.avm-headline .compare.below strong { color: #86efac; }
+
+.scenarios {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 4mm;
+  margin-top: 7mm;
+}
+.scenario {
+  border: 1px solid #ececec;
+  border-radius: 4pt;
+  padding: 5mm 5mm;
+  background: #fff;
+  position: relative;
+}
+.scenario.central {
+  background: #f5cb1c;
+  border-color: #f5cb1c;
+  color: #16161a;
+}
+.scenario .label {
+  font-size: 8pt;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: #888;
+  font-weight: 600;
+}
+.scenario.central .label { color: #5a4a08; }
+.scenario .value {
+  font-size: 17pt;
+  font-weight: 700;
+  margin-top: 2mm;
+  letter-spacing: -0.02em;
+}
+.scenario .ppm {
+  font-size: 9pt;
+  color: #777;
+  margin-top: 1.5mm;
+}
+.scenario.central .ppm { color: #5a4a08; }
+.scenario.central::before {
+  content: "Central";
+  position: absolute;
+  top: -2mm;
+  right: 3mm;
+  background: #16161a;
+  color: #f5cb1c;
+  font-size: 7pt;
+  font-weight: 700;
+  padding: 1mm 2.5mm;
+  letter-spacing: 0.1em;
+  border-radius: 1.5pt;
+}
+
+/* ---------------------------------------------------------------------
+   RECENTLY SOLD — comp table
+   --------------------------------------------------------------------- */
+table.comps {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 4mm;
+  font-size: 9pt;
+}
+table.comps th {
+  text-align: left;
+  font-weight: 700;
+  font-size: 7.5pt;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: #888;
+  padding: 3mm 3mm;
+  border-bottom: 1px solid #16161a;
+  background: transparent;
+}
+table.comps td {
+  padding: 3mm 3mm;
+  border-bottom: 1px solid #eee;
+  vertical-align: top;
+}
+table.comps tr {
+  break-inside: avoid;
+  page-break-inside: avoid;
+}
+table.comps tr:last-child td { border-bottom: none; }
+table.comps .addr { font-weight: 700; color: #16161a; font-size: 10pt; }
+table.comps .meta { font-size: 8pt; color: #777; margin-top: 1mm; line-height: 1.4; }
+table.comps .right { text-align: right; }
+table.comps .price-cell { font-weight: 700; color: #16161a; }
+
+/* Summary row at the bottom of the recently-listed table */
+table.comps tr.summary-row td {
+  border-top: 2px solid #16161a;
+  border-bottom: none;
+  padding-top: 5mm;
+}
+table.comps tr.summary-row .addr {
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-size: 9pt;
+  color: #555;
+  font-weight: 700;
+}
+table.comps tr.summary-row .meta { color: #999; }
+table.comps tr.summary-row .price-cell {
+  background: #f5cb1c;
+  color: #16161a;
+  padding: 2mm 3mm;
+  border-radius: 2pt;
+  display: inline-block;
+}
+
+/* ---------------------------------------------------------------------
+   NEIGHBORHOOD STATS
+   --------------------------------------------------------------------- */
+.stat-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 5mm;
+  margin-top: 4mm;
+}
+.stat {
+  background: #fff;
+  border: 1px solid #ececec;
+  border-radius: 4pt;
+  padding: 6mm;
+}
+.stat .label {
+  font-size: 7.5pt;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: #888;
+  font-weight: 600;
+}
+.stat .value {
+  font-size: 20pt;
+  font-weight: 700;
+  margin-top: 2mm;
+  color: #16161a;
+  letter-spacing: -0.01em;
+}
+.stat .sub {
+  font-size: 8.5pt;
+  color: #777;
+  margin-top: 1mm;
+}
+
+.footer-note {
+  margin-top: 12mm;
+  padding: 1mm 0 1mm 6mm;
+  font-size: 8.5pt;
+  color: #666;
+  border-left: 3px solid #f5cb1c;
+  line-height: 1.65;
+}
+.footer-note strong { color: #16161a; }
